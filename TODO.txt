@@ -1,0 +1,23 @@
+Login
+
+Easily searchable list of subreddits
+Subscribe to subreddits
+    - saves to localstorage
+    - also updates login
+    - account/unaccount should look identical
+
+https://www.reddit.com/subreddits/search.json?q=warframe&include_over_18=on
+
+Show list of all subreddits subscribed
+    - Right side menu
+
+
+
+
+score
+icon/thumbnail
+title
+submmited # ago
+author
+subreddit
+number of comments

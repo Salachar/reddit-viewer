@@ -1,0 +1,17 @@
+.search {
+    height: 2rem;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding-left: 0.5rem;
+    border-radius: 0.25rem;
+    color: #666;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    outline: none;
+}
+
+.search::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #666;
+    opacity: 0.5; /* Firefox */
+}

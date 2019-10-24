@@ -1,0 +1,27 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import side_menu_styles from './sidemenu.module.css';
+
+import Subreddit from './subreddit';
+
+class Subreddits extends Component {
+    render() {
+        return (
+            <div className={side_menu_styles.section}>
+                <div className={side_menu_styles.section_title}>Subscribed:</div>
+                {(this.props.subscribed || []).map((subreddit) => {
+                    return <Subreddit key={`subbed_${subreddit.key}`} checked={true} subreddit={subreddit} />;
+                })}
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        subscribed: state.subreddits.subscribed
+    };
+};
+
+export default connect(mapStateToProps, null)(Subreddits);

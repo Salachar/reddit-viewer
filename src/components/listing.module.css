@@ -1,0 +1,61 @@
+.article {
+    position: relative;
+    min-height: var(--article-size);
+    margin-bottom: 1rem;
+    background-color: white;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    cursor: pointer;
+}
+
+.score, .thumbnail {
+    position: absolute;
+    top: 0;
+}
+
+.score {
+    left: 0;
+    height:  var(--article-size);
+    width:  var(--article-size);
+    text-align: center;
+    line-height: var(--article-size);
+    color: #AAA;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.thumbnail {
+    left:  var(--article-size);
+    height:  var(--article-size);
+    width:  var(--article-size);
+    background-position: center top;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.body {
+    padding-left: calc((var(--article-size) * 2) + 1rem);
+}
+
+.title {
+    color: var(--reddit-blue);
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.submission {
+    font-size: 0.75rem;
+    color: #666;
+    padding: 0.25rem 0;
+}
+
+.comments {
+    color: #666;
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding-bottom: 0.5rem;
+    cursor: pointer;
+}
