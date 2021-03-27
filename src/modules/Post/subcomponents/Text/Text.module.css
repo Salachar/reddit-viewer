@@ -1,0 +1,17 @@
+.content {
+    text-align: left;
+    box-sizing: border-box;
+    color: var(--color-font-main);
+}
+
+.content p {
+    color: var(--color-main-font);
+    font-size: 0.85rem;
+    margin: 0.75rem 0;
+}
+
+.content a {
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--color-primary);
+}

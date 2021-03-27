@@ -1,0 +1,114 @@
+.post {
+    position: relative;
+    min-height: var(--article-size);
+    margin-bottom: 1rem;
+    background-color: var(--color-06dp);
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    box-shadow: var(--shadow-el-6);
+}
+
+.bar {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: var(--article-size) var(--article-size) 1fr;
+    grid-template-areas: "score thumbnail info";
+}
+
+.score {
+    grid-area: score;
+    text-align: center;
+    line-height: var(--article-size);
+    color: var(--color-font-secondary);
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.thumbnail {
+    grid-area: thumbnail;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 0.25rem;
+    margin: 0.5rem 0;
+}
+
+.body {
+    grid-area: info;
+    padding-left: 1rem;
+
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    grid-template-rows: 1fr 1.5rem 1.5rem;
+    grid-template-areas:
+        "title title"
+        "icon submission"
+        "icon comments";
+}
+
+.title {
+    grid-area: title;
+    color: var(--color-font-main);
+    font-weight: bold;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.icon {
+    grid-area: icon;
+    color: var(--color-primary);
+    border-radius: 1rem;
+    line-height: 3rem;
+    cursor: pointer;
+}
+.icon::before {
+    font-size: 1.5rem;
+}
+
+.submission {
+    grid-area: submission;
+    font-size: 0.75rem;
+    color: var(--color-font-tertiary);
+    padding: 0.25rem 0;
+}
+
+.comments {
+    grid-area: comments;
+    color: var(--color-font-tertiary);
+    font-weight: bold;
+    font-size: 0.75rem;
+    padding-bottom: 0.5rem;
+}
+
+.load_comments {
+    color: var(--color-primary);
+    font-weight: bold;
+    text-align: center;
+    font-size: 0.8rem;
+    /* padding: 0.25rem 0; */
+    cursor: pointer;
+}
+
+.comments_wrapper {
+    max-height: 30rem;
+    overflow: scroll;
+    /* padding: 0 1rem; */
+    padding: 0.25rem 1rem 0.25rem var(--article-size);
+}
+
+.content_wrapper {
+    text-align: center;
+    padding: 1rem 1rem 1rem var(--article-size);
+}
+
+.content_wrapper.hide {
+    display: none;
+}
+
+.subreddit_link {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--color-primary);
+}

@@ -1,0 +1,11 @@
+.media {
+    box-sizing: border-box;
+    max-height: 20rem;
+    max-width: 100%;
+    cursor: zoom-in;
+}
+
+.media_max {
+    max-height: none;
+    cursor: zoom-out;
+}

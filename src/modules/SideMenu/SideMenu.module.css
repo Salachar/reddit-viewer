@@ -1,0 +1,26 @@
+.sidemenu {
+    background-color: var(--color-side-menu);
+    padding: 1rem;
+    padding-top: 0.5rem;
+    box-shadow: var(--shadow-el-1);
+}
+
+.title {
+    font-size: 1.5rem;
+    /* color: white; */
+    color: var(--color-font-tertiary);
+    font-weight: bold;
+    opacity: 0.75;
+    text-align: center;
+}
+
+.section {
+    margin-top: 1rem;
+}
+
+.section_title {
+    /* color: white; */
+    color: var(--color-font-secondary);
+    font-weight: bold;
+    opacity: 0.75;
+}

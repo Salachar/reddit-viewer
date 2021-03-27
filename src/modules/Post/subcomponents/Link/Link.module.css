@@ -1,0 +1,22 @@
+.content {
+    /* padding: 2rem 5rem; */
+}
+
+.link, .link_address {
+    display: block;
+    font-weight: bold;
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.link {
+    font-size: 1rem;
+}
+
+.link_address {
+    font-size: 0.8rem;
+}
+
+iframe {
+    width: 100%;
+}

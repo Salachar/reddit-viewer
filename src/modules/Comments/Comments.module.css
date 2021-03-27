@@ -1,0 +1,71 @@
+.wrapper {
+    /* padding-left: 0.5rem; */
+}
+
+/* Replies to a comment (recursive) */
+.comments {
+    padding-left: 1.5rem;
+}
+
+.comment_even {
+    /* background-color: white; */
+    background-color: var(--color-06dp);
+}
+
+.comment_odd {
+    /* background-color: rgba(0,0,0,0.05); */
+    background-color: var(--color-12dp);
+}
+
+.comment {
+    /* padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-bottom: 0.5rem; */
+    /* padding-left: 0.5rem; */
+    /* padding-bottom: 0.5rem; */
+    padding: 0.25rem 0 0.5rem 0.5rem;
+}
+
+.author {
+    /* color: #666; */
+    color: var(--color-font-tertiary);
+    font-weight: bold;
+    font-size: 0.7rem;
+    padding-top: 0.2rem;
+    vertical-align: top;
+}
+
+.score {
+    margin-left: 0.5rem;
+    color: #999;
+    font-weight: normal;
+}
+
+.body {
+    /* color: black; */
+    color: var(--color-font-main);
+    font-size: 0.8rem;
+    /* padding-bottom: 0.4rem; */
+    padding: 0.25rem 0.25rem 0.5rem 0;
+}
+
+.award {
+    margin-left: 0.5rem;
+    vertical-align: top;
+    display: inline-block;
+    height: 0.8rem;
+    /* width: 0.8rem; */
+    min-width: 0.8rem;
+    border-radius: 50%;
+    line-height: 0.8rem;
+    text-align: center;
+    font-size: 0.6rem;
+}
+
+.gold {
+    background-color: gold;
+}
+
+.silver {
+    background-color: silver;
+}
