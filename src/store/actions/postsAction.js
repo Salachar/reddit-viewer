@@ -11,6 +11,50 @@ import { fetchSubredditData } from './subredditAction';
         ?before=post.id
 */
 
+export const fetchSubreddit = (subreddit, opts = {}) => (dispatch, getState) => {
+    subreddit.name = subreddit.title.toLowerCase();
+
+    if (subreddit.type === 'subreddit') {
+        const subreddits_data = copy((getState().subreddits || {}).data || {});
+        const subreddit_data = subreddits_data[subreddit.name];
+        if (!subreddit_data) {
+            dispatch(fetchSubredditData(subreddit));
+        } else {
+            subreddit = subreddit_data;
+        }
+    }
+
+    const URL = `https://www.reddit.com/${subreddit.url}.json?limit=25`;
+
+    GET(URL, (response) => {
+        return {
+            title: subreddit.title || subreddit.name,
+            subreddit,
+            list: response.data.children.map((item) => {
+                return cleanPost(item.data);
+            }),
+        };
+    }).then((action_data) => {
+        dispatch({
+            type: 'posts',
+            payload: action_data,
+        });
+        dispatch({
+            type: 'subreddit_search_clear',
+        });
+    }).catch((error) => {
+        dispatch({
+            type: 'subreddit_search_error',
+        });
+    });
+}
+
+export const clearSubredditSearchError = () => (dispatch) => {
+    dispatch({
+        type: 'subreddit_search_clear',
+    });
+}
+
 export const fetchPosts = (subreddit, opts = {}) => (dispatch, getState) => {
     const {
         limit = 25,
@@ -52,5 +96,10 @@ export const fetchPosts = (subreddit, opts = {}) => (dispatch, getState) => {
             type: 'posts',
             payload: action_data
         });
+    }).catch((error) => {
+        // dispatch({
+        //     type: 'posts_error',
+        //     error,
+        // });
     });
 }

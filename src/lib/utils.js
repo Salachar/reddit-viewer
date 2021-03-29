@@ -23,11 +23,13 @@ export function GET (url, parser) {
                 try {
                     resolve(parser(response));
                 } catch (e) {
-                    console.log(e);
+                    reject(e);
                 }
+            }).catch((e) => {
+                reject(e)
             });
         } catch (e) {
-            console.error(e);
+            reject(e);
         }
     });
 }

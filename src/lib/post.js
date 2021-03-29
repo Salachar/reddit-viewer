@@ -22,6 +22,9 @@ function parsePostData (data) {
         content: {},
         media: {},
 
+        // TODO: This info is important and probably shouldnt be lost
+        thumbnail: (!data.thumbnail.match(/self|spoiler|default/)) ? data.thumbnail : null,
+
         score_display: ((s) => {
             if (s > 100000) return Math.floor(s / 1000) + 'K';
             if (s > 10000) return (s / 1000).toFixed(1) + 'K';

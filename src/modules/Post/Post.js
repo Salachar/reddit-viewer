@@ -116,24 +116,27 @@ class Post extends Component {
             is_comments_expanded,
         } = this.state;
         const {
+            subreddit,
             post,
             comments,
             fetchPost,
             fetchPosts,
         } = this.props;
-        const {
-            subreddit,
-        } = data;
+        // const {
+        //     subreddit,
+        // } = data;
 
         const body_classname = classnames(styles.body, {
             [styles.body_empty]: post.empty,
         });
 
+        console.log(subreddit);
+
         return (
             <div className={styles.post}>
                 <div className={styles.bar}>
                     <div className={styles.score}>{data.score_display}</div>
-                    <div className={styles.thumbnail} style={{ backgroundImage: `url("${data.thumbnail || data.media.image}")` }}></div>
+                    <div className={styles.thumbnail} style={{ backgroundImage: `url("${data.thumbnail || data.media.image || subreddit.icon}")` }}></div>
                     <div className={body_classname}>
                         <div className={styles.title}>{data.title}</div>
                         {this.renderIcon()}
@@ -141,10 +144,10 @@ class Post extends Component {
                             {`Submitted ${data.submitted_at} ago by ${data.author} to `}
                             <span className={styles.subreddit_link} onClick={() => {
                                 fetchPosts({
-                                    title: subreddit,
+                                    title: data.subreddit,
                                     type: 'subreddit',
-                                    name: subreddit,
-                                    url: `/r/${subreddit}`,
+                                    name: data.subreddit,
+                                    url: `/r/${data.subreddit}`,
                                 });
                             }}>{data.subreddit}</span>
                         </div>

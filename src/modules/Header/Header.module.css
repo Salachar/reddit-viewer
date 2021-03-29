@@ -59,3 +59,11 @@ header {
     color: var(--color-font-tertiary);
     vertical-align: top;
 }
+
+.subreddit_search_error {
+    vertical-align: top;
+    color: #BB4444;
+    font-weight: bold;
+    font-size: 0.85rem;
+    margin-left: 0.5rem;
+}

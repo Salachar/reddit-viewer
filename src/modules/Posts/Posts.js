@@ -13,6 +13,7 @@ class Posts extends Component {
         const {
             className,
             posts,
+            subreddits_data,
             fetchPosts,
         } = this.props;
         const {
@@ -22,11 +23,13 @@ class Posts extends Component {
 
         // TODO : need detection for end of subreddit
 
+        const subreddit_data = subreddits_data[subreddit.name] || {};
+
         return (
             <div className={classnames(styles.wrapper, className)}>
                 {list.map((post) => {
                     if (!post || !post.id) return null;
-                    return <Post key={post.id} post={post} />
+                    return <Post key={post.id} subreddit={subreddit_data} post={post} />
                 })}
                 {list.length && <div className={styles.load_more} onClick={() => {
                     fetchPosts(subreddit, {
@@ -41,6 +44,7 @@ class Posts extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        subreddits_data: state.subreddits.data,
         posts: state.posts.current,
     }
 };

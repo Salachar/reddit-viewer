@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
-import { fetchPosts } from '../../store/actions/postsAction';
+import {
+    fetchSubreddit,
+    fetchPosts,
+    clearSubredditSearchError,
+} from '../../store/actions/postsAction';
 
 import styles from './Header.module.css';
 
@@ -29,10 +33,16 @@ class Header extends Component {
     }
 
     onSearch = (e) => {
+        const {
+            clearSubredditSearchError,
+            fetchSubreddit,
+        } = this.props;
+        clearSubredditSearchError();
+
         if (e.key.toLowerCase() !== 'enter') return;
         const search_string = e.currentTarget.value;
-        this.props.fetchPosts({
-            title: search_string,
+        fetchSubreddit({
+            title: e.currentTarget.value,
             type: 'subreddit',
             url: '/r/' + search_string,
         });
@@ -43,6 +53,7 @@ class Header extends Component {
             className,
             posts = {},
             subreddits_data,
+            subreddit_search_error,
         } = this.props;
         const {
             title,
@@ -61,6 +72,7 @@ class Header extends Component {
                     <span onClick={this.searchCollection} data-listing="subscribed" className={styles.listing}>Subscribed</span>
                     <span className={styles.search_label}>/r/</span>
                     <input className={styles.search} spellCheck="false" onKeyDown={this.onSearch} placeholder="subreddit"/>
+                    {subreddit_search_error && <span className={styles.subreddit_search_error}>SUBREDDIT NOT FOUND</span>}
                 </div>
                 <div className={styles.subreddit_current}>
                     {subreddit_data.icon && <img className={styles.subreddit_icon} src={subreddit_data.icon} alt="Subreddit Icon" />}
@@ -75,12 +87,15 @@ const mapStateToProps = (state) => {
     return {
         subreddits_data: state.subreddits.data,
         subscribed: state.subreddits.subscribed || [],
+        subreddit_search_error: state.subreddits.subreddit_search_error || false,
         posts: state.posts.current,
     };
 };
 
 const mapDispatchToProps = {
     fetchPosts,
+    fetchSubreddit,
+    clearSubredditSearchError,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

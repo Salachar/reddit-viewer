@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     subscribed_map: {},
     search_list: [],
     data: {},
+    subreddit_search_error: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -44,6 +45,20 @@ export default (state = INITIAL_STATE, action) => {
                 ...state,
                 search_list,
                 data,
+            };
+        }
+
+        case 'subreddit_search_error': {
+            return {
+                ...state,
+                subreddit_search_error: true,
+            };
+        }
+
+        case 'subreddit_search_clear': {
+            return {
+                ...state,
+                subreddit_search_error: false,
             };
         }
 
