@@ -15,6 +15,7 @@ class Header extends Component {
 
         fetchPosts({
             title: 'Subscribed',
+            type: 'listing',
             url: '/r/' + subscribed.map(s => s.name).join('+'),
         });
     }
@@ -22,6 +23,7 @@ class Header extends Component {
     onClick = (e) => {
         this.props.fetchPosts({
             title: e.currentTarget.dataset.listing,
+            type: 'listing',
             url: e.currentTarget.dataset.listing
         });
     }
@@ -31,6 +33,7 @@ class Header extends Component {
         const search_string = e.currentTarget.value;
         this.props.fetchPosts({
             title: search_string,
+            type: 'subreddit',
             url: '/r/' + search_string,
         });
     }
@@ -39,7 +42,14 @@ class Header extends Component {
         const {
             className,
             posts = {},
+            subreddits_data,
         } = this.props;
+        const {
+            title,
+            subreddit = {},
+        } = posts;
+
+        const subreddit_data = subreddits_data[subreddit.name] || {};
 
         return (
             <header className={classnames(styles.listings, className)}>
@@ -52,7 +62,10 @@ class Header extends Component {
                     <span className={styles.search_label}>/r/</span>
                     <input className={styles.search} spellCheck="false" onKeyDown={this.onSearch} placeholder="subreddit"/>
                 </div>
-                <div className={styles.selected}>{posts.title || ''}</div>
+                <div className={styles.subreddit_current}>
+                    {subreddit_data.icon && <img className={styles.subreddit_icon} src={subreddit_data.icon} alt="Subreddit Icon" />}
+                    <span className={styles.subreddit_title}>{title || ''}</span>
+                </div>
             </header>
         );
     }
@@ -60,8 +73,9 @@ class Header extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        subreddits_data: state.subreddits.data,
         subscribed: state.subreddits.subscribed || [],
-        posts: state.posts || {},
+        posts: state.posts.current,
     };
 };
 

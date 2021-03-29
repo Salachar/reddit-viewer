@@ -1,3 +1,4 @@
+import marked from 'marked';
 import {
     UUID,
     unescapeHTML,
@@ -16,6 +17,7 @@ function parsePostData (data) {
         ...data,
 
         title: (data.title || '').replace(/&amp;/g, '&'),
+        empty: false, // Mainly used for text to know if there is body content
         type: 'none',
         content: {},
         media: {},
@@ -61,6 +63,9 @@ function isImage (data) {
 function isVideo (data) {
     // Check the post_hint
     if (data.post_hint && data.post_hint.indexOf('video') !== -1) return true;
+
+    if (data.url && data.url.match(/.gifv/)) return true;
+
     // Do a basic check on the common video fields
     if (data.url && data.is_video && data.is_reddit_media_domain) return true;
     // There are probably more things to check
@@ -79,6 +84,9 @@ export function cleanPost (data) {
             post.type = 'text';
             post.content.body = data.selftext;
             post.content.body_html = data.selftext_html;
+            if (!post.content.body && !post.content.body_html) {
+                post.empty = true;
+            }
         } else if (isVideo(data)) {
             post.type = 'video';
             // post.media.video = data.secure_media || data.media;
@@ -103,7 +111,7 @@ export function cleanComments (comment, parent, even_layer) {
         id: comment.id,
         key: `${comment.id}_${UUID()}`,
         author: comment.author,
-        body: unescapeHTML(comment.body),
+        body: marked(unescapeHTML(comment.body)),
         score: comment.score,
         awards: (comment.all_awardings || []).map((award) => {
             return {

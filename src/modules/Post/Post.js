@@ -85,7 +85,11 @@ class Post extends Component {
         let fa_icon = 'fa-question-circle';
         switch (post.type) {
             case 'text':
-                fa_icon = 'fas fa-align-left';
+                if (post.empty) {
+                    fa_icon = '';
+                } else {
+                    fa_icon = 'fas fa-align-left';
+                }
                 break;
             case 'image':
                 fa_icon = 'far fa-image';
@@ -112,28 +116,45 @@ class Post extends Component {
             is_comments_expanded,
         } = this.state;
         const {
+            post,
             comments,
+            fetchPost,
             fetchPosts,
         } = this.props;
         const {
             subreddit,
         } = data;
 
+        const body_classname = classnames(styles.body, {
+            [styles.body_empty]: post.empty,
+        });
+
         return (
             <div className={styles.post}>
                 <div className={styles.bar}>
                     <div className={styles.score}>{data.score_display}</div>
                     <div className={styles.thumbnail} style={{ backgroundImage: `url("${data.thumbnail || data.media.image}")` }}></div>
-                    <div className={styles.body}>
+                    <div className={body_classname}>
                         <div className={styles.title}>{data.title}</div>
                         {this.renderIcon()}
                         <div className={styles.submission}>
                             {`Submitted ${data.submitted_at} ago by ${data.author} to `}
                             <span className={styles.subreddit_link} onClick={() => {
-                                fetchPosts(subreddit);
+                                fetchPosts({
+                                    title: subreddit,
+                                    type: 'subreddit',
+                                    name: subreddit,
+                                    url: `/r/${subreddit}`,
+                                });
                             }}>{data.subreddit}</span>
                         </div>
-                        <div className={styles.comments}>{data.num_comments} comments</div>
+                        <div className={styles.comments} onClick={() => {
+                            fetchPost(post);
+                            this.setState({
+                                is_media_expanded: true,
+                                is_comments_expanded: true,
+                            });
+                        }}>{data.num_comments} comments</div>
                     </div>
                 </div>
                 <div className={classnames(styles.content_wrapper, {[styles.hide]: !is_media_expanded})}>

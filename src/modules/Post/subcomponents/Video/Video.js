@@ -31,9 +31,27 @@ class Video extends Component {
             secure_media_embed = {}
         } = post;
 
+        // if (post.url) {
+        //     return (
+        //         <video
+        //             className={styles.media}
+        //             controls
+        //         >
+        //             <meta
+        //                 itemProp="embedURL"
+        //                 content={post.url}
+        //             />
+        //         </video>
+        //     );
+        // }
+
         if (secure_media.reddit_video) {
             return (
-                <video controls src={secure_media.reddit_video.fallback_url} />
+                <video
+                    className={styles.media}
+                    controls
+                    src={secure_media.reddit_video.fallback_url}
+                />
             );
         }
 

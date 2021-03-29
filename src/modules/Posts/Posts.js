@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 
+import { fetchPosts } from '../../store/actions/postsAction';
+
 import Post from '../Post';
 
 import styles from './Posts.module.css';
@@ -11,16 +13,27 @@ class Posts extends Component {
         const {
             className,
             posts,
+            fetchPosts,
         } = this.props;
+        const {
+            list = [],
+            subreddit = {},
+        } = posts;
 
-        console.log(posts);
+        // TODO : need detection for end of subreddit
 
         return (
             <div className={classnames(styles.wrapper, className)}>
-                {((posts || {}).list || []).map((post) => {
+                {list.map((post) => {
                     if (!post || !post.id) return null;
                     return <Post key={post.id} post={post} />
                 })}
+                {list.length && <div className={styles.load_more} onClick={() => {
+                    fetchPosts(subreddit, {
+                        count: list.length,
+                        after: list[list.length - 1].name,
+                    });
+                }}>LOAD MORE</div>}
             </div>
         );
     }
@@ -28,8 +41,12 @@ class Posts extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        posts: state.posts
+        posts: state.posts.current,
     }
 };
 
-export default connect(mapStateToProps, null)(Posts);
+const mapDispatchToProps = {
+    fetchPosts,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

@@ -11,7 +11,7 @@ class Subreddits extends Component {
             <div className={side_menu_styles.section}>
                 <div className={side_menu_styles.section_title}>Subscribed:</div>
                 {(this.props.subscribed || []).map((subreddit) => {
-                    return <Subreddit key={`subbed_${subreddit.key}`} checked={true} subreddit={subreddit} />;
+                    return <Subreddit key={`subbed_${subreddit.id}`} checked={true} subreddit={subreddit} />;
                 })}
             </div>
         );

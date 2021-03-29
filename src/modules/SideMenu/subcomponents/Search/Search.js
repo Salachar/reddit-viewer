@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { searchForSubreddits } from '../../../../store/actions/searchAction';
+import { searchSubreddits } from '../../../../store/actions/subredditAction';
 
 import side_menu_styles from '../../SideMenu.module.css';
 
@@ -10,19 +10,48 @@ import styles from './Search.module.css';
 import Subreddit from '../Subreddit';
 
 class SearchSubreddits extends Component {
+    constructor(props) {
+        super(props);
+
+        this.search_timer = null;
+    }
+
     search = (e) => {
-        if (e.key.toLowerCase() !== 'enter') return;
+        const {
+            searchSubreddits,
+        } = this.props;
+
         const search_string = e.currentTarget.value;
-        this.props.searchForSubreddits(search_string);
+        if (e.key.toLowerCase() !== 'enter') {
+            clearTimeout(this.search_timer);
+            this.search_timer = null;
+            this.search_timer = setTimeout(() => {
+                searchSubreddits(search_string);
+            }, 300);
+        } else {
+            searchSubreddits(search_string);
+        }
     }
 
     render() {
+        const {
+            search_list,
+            subscribed_map,
+        } = this.props;
+
         return (
             <div className={side_menu_styles.section}>
                 <div className={side_menu_styles.section_title}>Search:</div>
-                <input className={styles.search} spellCheck="false" onKeyDown={this.search} placeholder="subreddit name"/>
-                {(this.props.subreddits || []).map((subreddit) => {
-                    return <Subreddit key={`search_${subreddit.key}`} checked={!!this.props.subscribed_map[subreddit.key]} subreddit={subreddit} />;
+                <input className={styles.search} spellCheck="false" onKeyUp={this.search} placeholder="subreddit name"/>
+
+                {(search_list || []).map((subreddit) => {
+                    return (
+                        <Subreddit
+                            key={`search_${subreddit.id}`}
+                            checked={!!subscribed_map[subreddit.id]}
+                            subreddit={subreddit}
+                        />
+                    );
                 })}
             </div>
         );
@@ -31,13 +60,13 @@ class SearchSubreddits extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        subreddits: state.search.subreddits,
-        subscribed_map: state.subreddits.subscribed_map
+        search_list: state.subreddits.search_list,
+        subscribed_map: state.subreddits.subscribed_map,
     }
 };
 
 const mapDispatchToProps = {
-    searchForSubreddits: (search_string) => searchForSubreddits(search_string)
+    searchSubreddits,
 };
 
 SearchSubreddits.defaultProps = {

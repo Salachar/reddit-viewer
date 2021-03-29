@@ -37,14 +37,17 @@
     --color-font-secondary: #AAA;
     --color-font-tertiary: #999;
 
-    --color-main-header: var(--color-01dp);
-    --color-sub-header: var(--color-01dp);
+    --color-main-header: var(--color-02dp);
+    --color-sub-header: var(--color-02dp);
     --color-main-bg: var(--color-00dp);
-    --color-side-menu: var(--color-01dp);
+    --color-side-menu: var(--color-02dp);
+    --color-post: var(--color-01dp);
 
-    --shadow-el-0: 0 2px 2px #040404;
-    --shadow-el-1: 0 4px 4px #040404;
-    --shadow-el-6: 0 8px 8px #040404;
+    --color-shadow: #090909;
+    --shadow-el-0: 0 0px 0px var(--color-shadow);
+    --shadow-el-1: 0 2px 2px var(--color-shadow);
+    --shadow-el-2: 0 4px 4px var(--color-shadow);
+    --shadow-el-3: 0 6px 6px var(--color-shadow);
 }
 
 *::-webkit-scrollbar {

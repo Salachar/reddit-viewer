@@ -20,7 +20,7 @@ class Subreddit extends Component {
         return (
             <div className={styles.subreddit}>
                 <input type="checkbox" checked={this.props.checked} onChange={this.onSubscribe} className={styles.checkbox}></input>
-                <span onClick={this.onClick} className={styles.title}>{this.props.subreddit.name}</span>
+                <span onClick={this.onClick} className={styles.title}>{this.props.subreddit.display_name}</span>
                 <span className={styles.subscribers}>{this.props.subreddit.subscribers.display}</span>
             </div>
         );

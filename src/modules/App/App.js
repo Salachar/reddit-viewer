@@ -13,6 +13,7 @@ class App extends Component {
     componentDidMount () {
         this.props.fetchPosts({
             title: 'best',
+            type: 'listing',
             url: 'best'
         });
     }
