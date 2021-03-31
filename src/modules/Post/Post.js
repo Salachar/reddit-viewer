@@ -14,24 +14,60 @@ import Comments from '../Comments';
 
 import styles from './Post.module.css';
 
+const THUMBNAIL_ICON_MAP = {
+    link: 'far fa-newspaper',
+    text: 'far fa-comment-alt',
+    image: 'far fa-file-image',
+    video: 'far fa-file-video',
+};
+
+const ICON_MAP = {
+    text: 'fas fa-align-left',
+    image: 'far fa-image',
+    video: 'fas fa-video',
+    link: 'fas fa-external-link-alt',
+    default: 'fa-question-circle',
+};
+
 class Post extends Component {
     constructor (props) {
         super(props);
 
         this.state = {
             is_media_expanded: false,
-            is_media_max: false,
             is_comments_expanded: false,
         };
+
+        this.onCommentsClick = this.onCommentsClick.bind(this);
     }
 
     onClick = () => {
         const {
-            is_media_expanded
+            is_media_expanded,
+            is_comments_expanded,
         } = this.state;
 
         this.setState({
             is_media_expanded: !is_media_expanded,
+            is_comments_expanded: (is_media_expanded) ? false : is_comments_expanded,
+        });
+    }
+
+    onCommentsClick () {
+        const {
+            post,
+            fetchPost,
+        } = this.props;
+        const {
+            is_comments_expanded,
+        } = this.state;
+
+        if (!is_comments_expanded) {
+            fetchPost(post);
+        }
+
+        this.setState({
+            is_comments_expanded: !is_comments_expanded,
         });
     }
 
@@ -42,39 +78,62 @@ class Post extends Component {
 
         if (!is_media_expanded) return null;
 
+        console.log(post);
+
+        let component = null;
         switch (post.type) {
-            case 'video': return <Video post={post} />;
-            case 'image': return <Image post={post} />;
-            case 'text': return <Text post={post} />;
-            case 'link': return <Link post={post} />;
-            default: return null;
+            case 'video':
+                component = <Video post={post} />;
+                break;
+            case 'image':
+                component = <Image post={post} />;
+                break;
+            case 'text':
+                component = <Text post={post} />;
+                break;
+            case 'link':
+                component = <Link post={post} />;
+                break;
         }
+
+        return (
+            <div className={classnames(styles.content_wrapper, {[styles.hide]: !is_media_expanded})}>
+                {component}
+            </div>
+        );
     }
 
     renderComments (comments) {
+        const {
+            post
+        } = this.props;
         const {
             is_media_expanded,
             is_comments_expanded
         } = this.state;
 
-        if (!is_media_expanded) return null;
-
-        if (!is_comments_expanded) {
+        if (is_media_expanded && !is_comments_expanded) {
             return (
-                <div
-                    className={styles.load_comments}
-                    onClick={() => {
-                        this.setState({
-                            is_comments_expanded: !is_comments_expanded,
-                        });
-                        this.props.fetchPost(this.props.post);
-                    }}
-                >LOAD COMMENTS</div>
+                <div className={styles.comments_wrapper}>
+                    <div
+                        className={styles.load_comments}
+                        onClick={() => {
+                            this.setState({
+                                is_comments_expanded: !is_comments_expanded,
+                            });
+                            this.props.fetchPost(this.props.post);
+                        }}
+                    >LOAD COMMENTS</div>
+                </div>
             );
         }
 
         if (!comments || !comments.length) return null;
-        return <Comments comments={comments} />
+        return (
+            <div className={classnames(styles.comments_wrapper, {[styles.hide]: !is_comments_expanded})}>
+                <Comments comments={comments} post={post} />
+            </div>
+        );
     }
 
     renderIcon () {
@@ -82,90 +141,78 @@ class Post extends Component {
             post,
         } = this.props;
 
-        let fa_icon = 'fa-question-circle';
-        switch (post.type) {
-            case 'text':
-                if (post.empty) {
-                    fa_icon = '';
-                } else {
-                    fa_icon = 'fas fa-align-left';
-                }
-                break;
-            case 'image':
-                fa_icon = 'far fa-image';
-                break;
-            case 'video':
-                fa_icon = 'fas fa-video';
-                break;
-            case 'link':
-                fa_icon = 'fas fa-external-link-alt';
-                break;
-            default:
-                break;
-        }
+        let fa_icon = ICON_MAP[post.type] || ICON_MAP.default;
+        // Show no icon for empty text posts
+        if (post.type === 'text' && post.empty) fa_icon = '';
 
         return <i onClick={this.onClick} className={classnames(styles.icon, fa_icon)}></i>;
     }
 
-    render () {
-        const data = this.props.post;
-        if (!data) return;
+    renderThumbnail () {
+        const {
+            subreddit,
+            post,
+        } = this.props;
 
+        let class_name = styles.thumbnail;
+        if (post.thumbnail || post.media.image) {
+            class_name = classnames(class_name, styles.thumbnail_image);
+        }
+
+        const icon = post.thumbnail || post.media.image || subreddit.icon
+        if (icon) {
+            return (
+                <div
+                    className={class_name}
+                    style={{ backgroundImage: `url("${icon}")` }}
+                />
+            );
+        }
+
+        return <i className={classnames(styles.thumbnail_icon, THUMBNAIL_ICON_MAP[post.type])} />;
+    }
+
+    render () {
         const {
             is_media_expanded,
             is_comments_expanded,
         } = this.state;
         const {
-            subreddit,
             post,
             comments,
-            fetchPost,
             fetchPosts,
         } = this.props;
-        // const {
-        //     subreddit,
-        // } = data;
+
+        if (!post) return;
 
         const body_classname = classnames(styles.body, {
             [styles.body_empty]: post.empty,
         });
 
-        console.log(subreddit);
-
         return (
             <div className={styles.post}>
                 <div className={styles.bar}>
-                    <div className={styles.score}>{data.score_display}</div>
-                    <div className={styles.thumbnail} style={{ backgroundImage: `url("${data.thumbnail || data.media.image || subreddit.icon}")` }}></div>
+                    <div className={styles.score}>{post.score_display}</div>
+                    {this.renderThumbnail()}
                     <div className={body_classname}>
-                        <div className={styles.title}>{data.title}</div>
+                        <div className={styles.title}>{post.title}</div>
                         {this.renderIcon()}
                         <div className={styles.submission}>
-                            {`Submitted ${data.submitted_at} ago by ${data.author} to `}
+                            {`Submitted ${post.submitted_at} ago by ${post.author} to `}
                             <span className={styles.subreddit_link} onClick={() => {
                                 fetchPosts({
-                                    title: data.subreddit,
+                                    title: post.subreddit,
                                     type: 'subreddit',
-                                    name: data.subreddit,
-                                    url: `/r/${data.subreddit}`,
+                                    name: post.subreddit,
+                                    url: `/r/${post.subreddit}`,
                                 });
-                            }}>{data.subreddit}</span>
+                            }}>{post.subreddit}</span>
                         </div>
-                        <div className={styles.comments} onClick={() => {
-                            fetchPost(post);
-                            this.setState({
-                                is_media_expanded: true,
-                                is_comments_expanded: true,
-                            });
-                        }}>{data.num_comments} comments</div>
+                        <div className={styles.comments} onClick={this.onCommentsClick}>{post.num_comments} comments</div>
                     </div>
                 </div>
-                <div className={classnames(styles.content_wrapper, {[styles.hide]: !is_media_expanded})}>
-                    {this.renderMedia(data)}
-                </div>
-                <div className={classnames(styles.comments_wrapper, {[styles.hide]: !is_comments_expanded})}>
-                    {this.renderComments(comments.byID[data.id])}
-                </div>
+                {this.renderMedia(post)}
+                {this.renderComments(comments.byID[post.id])}
             </div>
         );
     }

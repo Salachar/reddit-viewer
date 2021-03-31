@@ -114,7 +114,7 @@ export function cleanComments (comment, parent, even_layer) {
         id: comment.id,
         key: `${comment.id}_${UUID()}`,
         author: comment.author,
-        body: marked(unescapeHTML(comment.body)),
+        body: marked(unescapeHTML(comment.body_html)),
         score: comment.score,
         awards: (comment.all_awardings || []).map((award) => {
             return {

@@ -19,12 +19,17 @@
     padding: 0.25rem 0 0.5rem 0.5rem;
 }
 
-.author {
+.author_info {
     color: var(--color-font-tertiary);
     font-weight: bold;
     font-size: 0.7rem;
     padding-top: 0.2rem;
     vertical-align: top;
+}
+.author_is_op {
+    /* color: var(--color-primary); */
+    border-bottom: 2px solid var(--color-primary);
+    font-size: 0.8rem;
 }
 
 .score {
@@ -41,10 +46,24 @@
 
 .body a {
     font-weight: bold;
-    /* text-decoration: none; */
     color: var(--color-primary);
-
 }
+
+.body blockquote {
+    border-left: 0.2rem solid var(--color-font-tertiary);
+    margin: 0.5rem 0 0 1rem;
+    padding-left: 01rem;
+}
+
+.body p {
+    margin: 0.5rem 0 0 0;
+}
+
+.body h1 {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.2rem;
+}
+
 
 .award {
     margin-left: 0.5rem;

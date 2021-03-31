@@ -28,11 +28,26 @@
 .thumbnail {
     grid-area: thumbnail;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     border-radius: 0.25rem;
     margin: 0.5rem 0;
+    /* background-color: black; */
 }
+.thumbnail_image {
+    background-color: black;
+}
+.thumbnail_icon {
+    grid-area: thumbnail;
+    color: var(--color-font-tertiary);
+    text-align: center;
+    line-height: var(--article-size);
+    opacity: 0.5;
+}
+.thumbnail_icon::before {
+    font-size: 3rem;
+}
+
 
 .body {
     grid-area: info;
@@ -104,6 +119,10 @@
     overflow: scroll;
     padding: 0.25rem 0 0.5rem 0;
     margin: 0 1rem 0 var(--article-size);
+}
+
+.comments_wrapper.hide {
+    display: none;
 }
 
 .content_wrapper {
