@@ -9,6 +9,7 @@ import Image from './subcomponents/Image';
 import Text from './subcomponents/Text';
 import Link from './subcomponents/Link';
 import Video from './subcomponents/Video';
+import Gallery from './subcomponents/Gallery';
 
 import Comments from '../Comments';
 
@@ -17,8 +18,13 @@ import styles from './Post.module.css';
 const THUMBNAIL_ICON_MAP = {
     link: 'far fa-newspaper',
     text: 'far fa-comment-alt',
-    image: 'far fa-file-image',
-    video: 'far fa-file-video',
+    // image: 'far fa-file-image',
+    // video: 'far fa-file-video',
+    // text: 'fas fa-align-left',
+    image: 'far fa-image',
+    video: 'fas fa-video',
+    // link: 'fas fa-external-link-alt',
+    gallery: 'far fa-images',
 };
 
 const ICON_MAP = {
@@ -26,6 +32,7 @@ const ICON_MAP = {
     image: 'far fa-image',
     video: 'fas fa-video',
     link: 'fas fa-external-link-alt',
+    gallery: 'far fa-images',
     default: 'fa-question-circle',
 };
 
@@ -93,6 +100,9 @@ class Post extends Component {
                 break;
             case 'link':
                 component = <Link post={post} />;
+                break;
+            case 'gallery':
+                component = <Gallery post={post} />;
                 break;
         }
 

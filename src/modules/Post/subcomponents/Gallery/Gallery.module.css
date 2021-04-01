@@ -1,0 +1,25 @@
+.thumbnails {
+    background-color: #333;
+    padding-top: 0.5rem;
+    border-radius: 0.5rem;
+}
+.thumbnail {
+    width: 6rem;
+    height: 6rem;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin: 0 0.25rem 0.5rem 0.25rem;
+}
+.thumbnail:hover {
+    background-color: #444;
+}
+
+.selected_image {
+    max-width: 100%;
+    cursor: zoom-in;
+}
+.selected_image.full_size {
+    width: 100%;
+    cursor: zoom-out;
+}

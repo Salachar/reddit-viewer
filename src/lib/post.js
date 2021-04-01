@@ -3,6 +3,10 @@ import {
     UUID,
     unescapeHTML,
 } from './utils';
+import {
+    imageIDtoURL,
+    decodeImageURL,
+} from './image';
 
 /*
     Caveats I have noticed from looking at reddit post json:
@@ -75,6 +79,12 @@ function isVideo (data) {
     return false;
 }
 
+function isGallery (data) {
+    if (data.is_gallery) return true;
+    if (data.url.indexOf('gallery') !== -1 && data.gallery_data) return true;
+    return false;
+}
+
 export function cleanPost (data) {
     try {
         if (!data.author && data.kind) {
@@ -96,6 +106,33 @@ export function cleanPost (data) {
         } else if (isImage(data)) {
             post.type = 'image';
             post.media.image = data.url;
+        } else if(isGallery(data)) {
+            post.type = 'gallery';
+            post.media.images = [];
+            const image_map = post.media_metadata || {};
+            post.media.images = post.gallery_data.items.map((item) => {
+                const id = image_map[item.media_id].id;
+                const mime_type = image_map[item.media_id].m;
+                // const source = imageIDtoURL(id, mime_type);
+                return {
+                    id,
+                    mime_type,
+                    // source,
+                    resolutions: image_map[item.media_id].p.map((res) => {
+                        return {
+                            width: res.x,
+                            height: res.y,
+                            source: decodeImageURL(res.u),
+                        };
+                    }),
+                    thumbnail: {
+                        source: decodeImageURL(image_map[item.media_id].p[0].u),
+                    },
+                    width: image_map[item.media_id].s.x,
+                    height: image_map[item.media_id].s.y,
+                    source: decodeImageURL(image_map[item.media_id].s.u),
+                };
+            });
         } else if (data.url) {
             post.type = 'link';
         }
