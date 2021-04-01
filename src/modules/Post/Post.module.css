@@ -30,12 +30,15 @@
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    border-radius: 0.25rem;
-    margin: 0.5rem 0;
+    /* border-radius: 0.25rem; */
+    /* margin: 0.5rem 0; */
     /* background-color: black; */
 }
 .thumbnail_image {
     background-color: black;
+}
+.thumbnail_subreddit {
+    opacity: 0.5;
 }
 .thumbnail_icon {
     grid-area: thumbnail;

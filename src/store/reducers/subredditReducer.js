@@ -48,6 +48,13 @@ export default (state = INITIAL_STATE, action) => {
             };
         }
 
+        case 'clear_search': {
+            return {
+                ...state,
+                search_list: [],
+            };
+        }
+
         case 'subreddit_search_error': {
             return {
                 ...state,

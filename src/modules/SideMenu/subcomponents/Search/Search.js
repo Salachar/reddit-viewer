@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { searchSubreddits } from '../../../../store/actions/subredditAction';
+import {
+    searchSubreddits,
+    clearSearch,
+} from '../../../../store/actions/subredditAction';
 
 import side_menu_styles from '../../SideMenu.module.css';
 
@@ -19,9 +22,18 @@ class SearchSubreddits extends Component {
     search = (e) => {
         const {
             searchSubreddits,
+            clearSearch,
         } = this.props;
 
         const search_string = e.currentTarget.value;
+
+        if (!search_string) {
+            clearTimeout(this.search_timer);
+            this.search_timer = null;
+            clearSearch();
+            return;
+        }
+
         if (e.key.toLowerCase() !== 'enter') {
             clearTimeout(this.search_timer);
             this.search_timer = null;
@@ -67,6 +79,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     searchSubreddits,
+    clearSearch,
 };
 
 SearchSubreddits.defaultProps = {

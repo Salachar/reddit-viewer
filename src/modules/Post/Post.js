@@ -160,7 +160,7 @@ class Post extends Component {
 
     renderThumbnail () {
         const {
-            subreddit,
+            subreddit = {},
             post,
         } = this.props;
 
@@ -171,6 +171,9 @@ class Post extends Component {
 
         const icon = post.thumbnail || post.media.image || subreddit.icon
         if (icon) {
+            if (icon === subreddit.icon) {
+                class_name = classnames(class_name, styles.thumbnail_subreddit);
+            }
             return (
                 <div
                     className={class_name}

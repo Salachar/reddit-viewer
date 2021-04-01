@@ -24,6 +24,12 @@ export const searchSubreddits = (search_string) => (dispatch) => {
     });
 }
 
+export const clearSearch = () => (dispatch) => {
+    dispatch({
+        type: 'clear_search'
+    });
+}
+
 export const fetchSubredditData = (subreddit) => (dispatch) => {
     const URL = `https://www.reddit.com/r/${subreddit.name}/about.json`;
     GET(URL, (response) => {

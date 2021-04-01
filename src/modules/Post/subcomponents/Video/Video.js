@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { unescapeHTML } from '../../../../lib/utils';
+import DashPlayer from '../../../../lib/dash';
 
 import styles from './Video.module.css';
 
@@ -44,6 +45,12 @@ class Video extends Component {
         //         </video>
         //     );
         // }
+
+        if (secure_media.reddit_video.dash_url) {
+            new DashPlayer({
+                url: secure_media.reddit_video.dash_url,
+            });
+        }
 
         if (secure_media.reddit_video) {
             return (
