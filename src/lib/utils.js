@@ -16,10 +16,10 @@ export function unescapeHTML (string) {
     return txt.value;
 }
 
-export function GET (url, parser) {
+export function GET (url, parser, opts = {}) {
     return new Promise((resolve, reject) => {
         try {
-            fetch(url).then(response => response.json()).then((response) => {
+            fetch(url, opts).then(response => response.json()).then((response) => {
                 try {
                     resolve(parser(response));
                 } catch (e) {

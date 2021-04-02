@@ -34,7 +34,7 @@ class Gallery extends Component {
 
         return (
             <img
-                alt="Gallery Main Image"
+                alt="Main"
                 className={classnames(styles.selected_image, {
                     [styles.full_size]: is_media_max,
                 })}
@@ -52,15 +52,23 @@ class Gallery extends Component {
         const {
             post,
         } = this.props;
+        const {
+            selected_image,
+        } = this.state;
 
         return (
             <div className={styles.wrapper}>
                 <div className={styles.thumbnails}>
-                    {post.media.images.map((image) => {
+                    {post.media.images.map((image, index) => {
+                        console.log(selected_image);
+                        const class_name = classnames(styles.thumbnail, {
+                            [styles.selected]: image.id === (selected_image || {}).id,
+                        });
                         return (
                             <img
-                                alt="Gallery Image"
-                                className={styles.thumbnail}
+                                alt={`Thumnbnail ${index}`}
+                                key={`image_key_${image.id}`}
+                                className={class_name}
                                 src={image.thumbnail.source}
                                 onClick={() => {
                                     this.setState({

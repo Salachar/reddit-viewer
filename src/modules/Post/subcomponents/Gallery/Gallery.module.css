@@ -7,15 +7,20 @@
     width: 6rem;
     height: 6rem;
     object-fit: contain;
-    border-radius: 0.5rem;
+    /* border-radius: 0.5rem; */
     cursor: pointer;
     margin: 0 0.25rem 0.5rem 0.25rem;
+    border-bottom: 0.25rem solid transparent;
+}
+.thumbnail.selected {
+    border-bottom: 0.25rem solid var(--color-primary);
 }
 .thumbnail:hover {
     background-color: #444;
 }
 
 .selected_image {
+    margin-top: 1rem;
     max-width: 100%;
     cursor: zoom-in;
 }

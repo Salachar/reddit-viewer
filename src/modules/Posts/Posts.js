@@ -24,8 +24,6 @@ class Posts extends Component {
         // TODO : need detection for end of subreddit
 
         const subreddit_data = subreddits_data[subreddit.name] || {};
-        console.log(subreddit_data);
-        console.log(posts);
 
         return (
             <div className={classnames(styles.wrapper, className)}>

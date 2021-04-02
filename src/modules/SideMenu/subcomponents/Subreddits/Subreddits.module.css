@@ -1,0 +1,5 @@
+.view_subscribed {
+    color: var(--color-primary);
+    text-decoration: underline;
+    cursor: pointer;
+}

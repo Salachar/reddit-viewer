@@ -8,10 +8,33 @@ import './index.css';
 
 import App from './modules/App';
 
-// import * as serviceWorker from './serviceWorker';
+const store = configureStore();
+store.subscribe((e) => {
+    const current_state = store.getState();
+    const {
+        posts = {},
+        subreddits = {},
+    } = current_state;
+    const {
+        current = {},
+    } = posts;
+    const {
+        subscribed = [],
+        subscribed_map = {}
+    } = subreddits;
+
+    const serializedState = JSON.stringify({
+        current: current.subreddit || null,
+        subreddits: {
+            subscribed,
+            subscribed_map,
+        },
+    });
+    localStorage.setItem('saved_state', serializedState);
+});
 
 ReactDOM.render(
-    <Provider store={configureStore()}>
+    <Provider store={store}>
         <App />
     </Provider>,
     document.getElementById('root')

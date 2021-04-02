@@ -23,6 +23,11 @@ header {
     cursor: pointer;
     text-decoration: underline;
 }
+.listing.disabled {
+    color: var(--color-font-secondary);
+    text-decoration: none;
+    cursor: auto;
+}
 
 .search_label {
     color: var(--color-font-secondary);

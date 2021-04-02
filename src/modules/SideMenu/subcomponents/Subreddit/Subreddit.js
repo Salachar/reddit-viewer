@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 
 import { fetchPosts } from '../../../../store/actions/postsAction';
 import { subscribeSubreddit } from '../../../../store/actions/subredditAction';
@@ -16,12 +17,34 @@ class Subreddit extends Component {
         this.props.subscribeSubreddit(this.props.subreddit, checked ? 'add' : 'remove');
     }
 
+    onCheckboxClick (checked) {
+        this.props.subscribeSubreddit(this.props.subreddit, checked ? 'add' : 'remove');
+    }
+
     render() {
+        const {
+            checked,
+            subreddit,
+        } = this.props;
+
         return (
             <div className={styles.subreddit}>
-                <input type="checkbox" checked={this.props.checked} onChange={this.onSubscribe} className={styles.checkbox}></input>
-                <span onClick={this.onClick} className={styles.title}>{this.props.subreddit.display_name}</span>
-                <span className={styles.subscribers}>{this.props.subreddit.subscribers.display}</span>
+                {/* <input
+                    type="checkbox"
+                    checked={this.props.checked}
+                    onChange={this.onSubscribe}
+                    className={styles.checkbox}
+                /> */}
+                <div
+                    className={classnames(styles.checkbox, {
+                        [styles.checked]: checked,
+                    })}
+                    onClick={() => {
+                        this.onCheckboxClick(!checked);
+                    }}
+                />
+                <span onClick={this.onClick} className={styles.title}>{subreddit.display_name}</span>
+                <span className={styles.subscribers}>{subreddit.subscribers.display}</span>
             </div>
         );
     }

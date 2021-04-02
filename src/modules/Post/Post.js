@@ -104,6 +104,9 @@ class Post extends Component {
             case 'gallery':
                 component = <Gallery post={post} />;
                 break;
+            default:
+                component = null;
+                break;
         }
 
         return (
@@ -187,10 +190,6 @@ class Post extends Component {
 
     render () {
         const {
-            is_media_expanded,
-            is_comments_expanded,
-        } = this.state;
-        const {
             post,
             comments,
             fetchPosts,
@@ -219,7 +218,7 @@ class Post extends Component {
                                     name: post.subreddit,
                                     url: `/r/${post.subreddit}`,
                                 });
-                            }}>{post.subreddit}</span>
+                            }}>{`/r/${post.subreddit}`}</span>
                         </div>
                         <div className={styles.comments} onClick={this.onCommentsClick}>{post.num_comments} comments</div>
                     </div>

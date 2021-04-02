@@ -59,3 +59,10 @@ export const subscribeSubreddit = (subreddit, task) => (dispatch, getState) => {
         payload: subreddits
     });
 }
+
+export const setSubreddits = (subreddits) => (dispatch) => {
+    dispatch({
+        type: 'set_subreddits',
+        payload: subreddits,
+    });
+}

@@ -69,6 +69,13 @@ export default (state = INITIAL_STATE, action) => {
             };
         }
 
+        case 'set_subreddits': {
+            return {
+                ...state,
+                ...action.payload,
+            };
+        }
+
         default:
             return state;
     }

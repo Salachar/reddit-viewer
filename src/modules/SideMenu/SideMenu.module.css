@@ -11,7 +11,7 @@
     /* color: white; */
     color: var(--color-font-tertiary);
     font-weight: bold;
-    opacity: 0.75;
+    /* opacity: 0.75; */
     text-align: center;
 }
 
@@ -23,5 +23,5 @@
     /* color: white; */
     color: var(--color-font-secondary);
     font-weight: bold;
-    opacity: 0.75;
+    /* opacity: 0.75; */
 }

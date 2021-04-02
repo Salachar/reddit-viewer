@@ -12,7 +12,7 @@ class DashPlayer {
     fetchManifest (URL) {
         GET(URL, (response) => {
             return response;
-        }).then((manifest_data) => {
+        }, { mode: 'no-cors' }).then((manifest_data) => {
             console.log(manifest_data);
         });
     }

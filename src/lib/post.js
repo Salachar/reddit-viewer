@@ -4,7 +4,6 @@ import {
     unescapeHTML,
 } from './utils';
 import {
-    imageIDtoURL,
     decodeImageURL,
 } from './image';
 

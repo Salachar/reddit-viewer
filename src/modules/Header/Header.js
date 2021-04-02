@@ -17,6 +17,8 @@ class Header extends Component {
             fetchPosts,
         } = this.props;
 
+        if (!subscribed.length) return;
+
         fetchPosts({
             title: 'Subscribed',
             type: 'listing',
@@ -52,6 +54,7 @@ class Header extends Component {
         const {
             className,
             posts = {},
+            subscribed,
             subreddits_data,
             subreddit_search_error,
         } = this.props;
@@ -62,6 +65,10 @@ class Header extends Component {
 
         const subreddit_data = subreddits_data[subreddit.name] || {};
 
+        const view_subscribed_classname = classnames(styles.listing, {
+            [styles.disabled]: !subscribed.length,
+        });
+
         return (
             <header className={classnames(styles.listings, className)}>
                 <div className={styles.main_links}>
@@ -69,7 +76,7 @@ class Header extends Component {
                     <span onClick={this.onClick} data-listing="top" className={styles.listing}>Top</span>
                     <span onClick={this.onClick} data-listing="new" className={styles.listing}>New</span>
                     <span onClick={this.onClick} data-listing="hot" className={styles.listing}>Hot</span>
-                    <span onClick={this.searchCollection} data-listing="subscribed" className={styles.listing}>Subscribed</span>
+                    <span onClick={this.searchCollection} data-listing="subscribed" className={view_subscribed_classname}>Subscribed</span>
                     <span className={styles.search_label}>/r/</span>
                     <input className={styles.search} spellCheck="false" onKeyDown={this.onSearch} placeholder="subreddit"/>
                     {subreddit_search_error && <span className={styles.subreddit_search_error}>SUBREDDIT NOT FOUND</span>}
